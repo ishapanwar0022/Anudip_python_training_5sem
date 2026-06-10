@@ -1,4 +1,4 @@
-#5. City Population & Development Dashboard 
+# City Population Dashboard
 '''Problem Statement 
 The government wants to analyze city data. 
 Store details of at least 30 cities. 
@@ -27,52 +27,59 @@ o Large
 11. Generate separate dictionaries for:  
 o High Literacy Cities  
 o Low Literacy Cities  
-12. Generate a national summary report. '''
+12. Generate a national summary report.  
+Challenge 
+Rank all cities based on population density. '''
 
-# City Population Dashboard
 
 cities = {
-    "Delhi": {"population": 30000000, "literacy": 89},
-    "Mumbai": {"population": 20000000, "literacy": 92},
-    "Jaipur": {"population": 4000000, "literacy": 85}
+    "Delhi": {"population": 30000000, "literacy": 89, "area": 1484},
+    "Mumbai": {"population": 20000000, "literacy": 92, "area": 603},
+    "Jaipur": {"population": 4000000, "literacy": 85, "area": 467},
+    "Lucknow": {"population": 3500000, "literacy": 88, "area": 631},
+    "Pune": {"population": 6000000, "literacy": 91, "area": 516}
 }
 
 while True:
 
     print("\n1.Display Cities")
     print("2.Add City")
-    print("3.Highest Population")
-    print("4.Average Population")
-    print("5.High Literacy Cities")
-    print("6.Exit")
+    print("3.Highest Population City")
+    print("4.Lowest Population City")
+    print("5.Average Population")
+    print("6.High Literacy Cities")
+    print("7.Low Literacy Cities")
+    print("8.Population Density")
+    print("9.City Categories")
+    print("10.Development Priority List")
+    print("11.Exit")
 
     ch = int(input("Enter Choice: "))
 
-    # Display Cities
     if ch == 1:
 
         for c in cities:
             print(c, cities[c])
 
-    # Add City
     elif ch == 2:
 
         name = input("Enter City Name: ")
         population = int(input("Enter Population: "))
-        literacy = int(input("Enter Literacy Rate: "))
+        literacy = int(input("Enter Literacy: "))
+        area = int(input("Enter Area: "))
 
         cities[name] = {
             "population": population,
-            "literacy": literacy
+            "literacy": literacy,
+            "area": area
         }
 
         print("City Added")
 
-    # Highest Population
     elif ch == 3:
 
         city = ""
-        max_pop = 0
+        max_pop = -1
 
         for c in cities:
 
@@ -83,8 +90,21 @@ while True:
 
         print("Highest Population City =", city)
 
-    # Average Population
     elif ch == 4:
+
+        city = ""
+        min_pop = 999999999
+
+        for c in cities:
+
+            if cities[c]["population"] < min_pop:
+
+                min_pop = cities[c]["population"]
+                city = c
+
+        print("Lowest Population City =", city)
+
+    elif ch == 5:
 
         total = 0
 
@@ -95,8 +115,7 @@ while True:
 
         print("Average Population =", avg)
 
-    # High Literacy Cities
-    elif ch == 5:
+    elif ch == 6:
 
         print("High Literacy Cities:")
 
@@ -105,8 +124,53 @@ while True:
             if cities[c]["literacy"] >= 90:
                 print(c)
 
-    # Exit
-    elif ch == 6:
+    elif ch == 7:
+
+        print("Low Literacy Cities:")
+
+        for c in cities:
+
+            if cities[c]["literacy"] < 90:
+                print(c)
+
+    elif ch == 8:
+
+        print("Population Density:")
+
+        for c in cities:
+
+            density = cities[c]["population"] / cities[c]["area"]
+
+            print(c, "=", density)
+
+    elif ch == 9:
+
+        for c in cities:
+
+            pop = cities[c]["population"]
+
+            if pop > 10000000:
+                print(c, "- Large")
+
+            elif pop > 5000000:
+                print(c, "- Medium")
+
+            else:
+                print(c, "- Small")
+
+    elif ch == 10:
+
+        priority = {}
+
+        for c in cities:
+
+            if cities[c]["literacy"] < 90:
+                priority[c] = cities[c]
+
+        print("Development Priority Cities:")
+        print(priority)
+
+    elif ch == 11:
         break
 
     else:
