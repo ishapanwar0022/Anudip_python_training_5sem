@@ -1,4 +1,4 @@
-#1. Student Performance Analytics System 
+# Student Performance Analytics System
 '''Problem Statement 
 A coaching institute wants to analyze student performance. 
 Store details of at least 30 students in a dictionary. 
@@ -23,14 +23,14 @@ o C (50–74)
 o F (<50)  
 10. Display students scoring above average.  
 11. Display top 5 performers.  
-12. Create a separate dictionary for scholarship students (marks > 85). '''
-
-# Student Performance Analytics System
+12. Create a separate dictionary for scholarship students (marks > 85).'''
 
 students = {
     "S101": {"name": "Rahul", "marks": 85},
     "S102": {"name": "Priya", "marks": 92},
-    "S103": {"name": "Aman", "marks": 45}
+    "S103": {"name": "Aman", "marks": 45},
+    "S104": {"name": "Riya", "marks": 78},
+    "S105": {"name": "Karan", "marks": 60}
 }
 
 while True:
@@ -40,22 +40,24 @@ while True:
     print("3. Add Student")
     print("4. Update Marks")
     print("5. Delete Student")
-    print("6. Find Topper")
+    print("6. Topper and Lowest Scorer")
     print("7. Class Average")
-    print("8. Pass/Fail Count")
-    print("9. Grade Report")
-    print("10. Exit")
+    print("8. Pass and Fail Count")
+    print("9. Generate Grades")
+    print("10. Students Above Average")
+    print("11. Scholarship Students")
+    print("12. Exit")
 
-    choice = int(input("Enter Choice: "))
+    ch = int(input("Enter Choice: "))
 
     # Display
-    if choice == 1:
+    if ch == 1:
 
         for sid in students:
             print(sid, students[sid])
 
     # Search
-    elif choice == 2:
+    elif ch == 2:
 
         sid = input("Enter Student ID: ")
 
@@ -65,7 +67,7 @@ while True:
             print("Student Not Found")
 
     # Add
-    elif choice == 3:
+    elif ch == 3:
 
         sid = input("Enter ID: ")
         name = input("Enter Name: ")
@@ -76,7 +78,7 @@ while True:
         print("Student Added")
 
     # Update
-    elif choice == 4:
+    elif ch == 4:
 
         sid = input("Enter ID: ")
 
@@ -84,66 +86,68 @@ while True:
             marks = int(input("Enter New Marks: "))
             students[sid]["marks"] = marks
             print("Marks Updated")
-        else:
-            print("Student Not Found")
 
     # Delete
-    elif choice == 5:
+    elif ch == 5:
 
         sid = input("Enter ID: ")
 
         if sid in students:
             del students[sid]
             print("Student Deleted")
-        else:
-            print("Student Not Found")
 
-    # Topper
-    elif choice == 6:
+    # Topper and Lowest
+    elif ch == 6:
+
+        max_marks = -1
+        min_marks = 101
 
         topper = ""
-        highest = 0
+        lowest = ""
 
         for sid in students:
 
-            if students[sid]["marks"] > highest:
-
-                highest = students[sid]["marks"]
+            if students[sid]["marks"] > max_marks:
+                max_marks = students[sid]["marks"]
                 topper = students[sid]["name"]
 
-        print("Topper:", topper)
-        print("Marks:", highest)
+            if students[sid]["marks"] < min_marks:
+                min_marks = students[sid]["marks"]
+                lowest = students[sid]["name"]
+
+        print("Topper =", topper, max_marks)
+        print("Lowest Scorer =", lowest, min_marks)
 
     # Average
-    elif choice == 7:
+    elif ch == 7:
 
         total = 0
 
         for sid in students:
             total += students[sid]["marks"]
 
-        average = total / len(students)
+        avg = total / len(students)
 
-        print("Average Marks =", average)
+        print("Class Average =", avg)
 
     # Pass Fail
-    elif choice == 8:
+    elif ch == 8:
 
-        pass_count = 0
-        fail_count = 0
+        p = 0
+        f = 0
 
         for sid in students:
 
             if students[sid]["marks"] >= 50:
-                pass_count += 1
+                p += 1
             else:
-                fail_count += 1
+                f += 1
 
-        print("Pass Students =", pass_count)
-        print("Fail Students =", fail_count)
+        print("Pass =", p)
+        print("Fail =", f)
 
     # Grades
-    elif choice == 9:
+    elif ch == 9:
 
         for sid in students:
 
@@ -163,8 +167,38 @@ while True:
 
             print(students[sid]["name"], "-", grade)
 
+    # Above Average
+    elif ch == 10:
+
+        total = 0
+
+        for sid in students:
+            total += students[sid]["marks"]
+
+        avg = total / len(students)
+
+        print("Students Above Average:")
+
+        for sid in students:
+
+            if students[sid]["marks"] > avg:
+                print(students[sid]["name"])
+
+    # Scholarship Students
+    elif ch == 11:
+
+        scholarship = {}
+
+        for sid in students:
+
+            if students[sid]["marks"] > 85:
+                scholarship[sid] = students[sid]
+
+        print("Scholarship Students:")
+        print(scholarship)
+
     # Exit
-    elif choice == 10:
+    elif ch == 12:
 
         print("Program Ended")
         break

@@ -1,4 +1,4 @@
-#3. Smart Library Management System 
+# Smart Library Management System
 '''Problem Statement 
 Create a digital library management system. 
 Example Structure 
@@ -22,39 +22,45 @@ Requirements
 9. Display books that are unavailable.  
 10. Find the most available book.  
 11. Generate a restocking report.  
-12. Create a separate dictionary of books requiring immediate purchase. '''
-
-#  Smart Library Management System
+12. Create a separate dictionary of books requiring immediate purchase.  
+Challenge 
+Generate a complete library summary report. '''
 
 library = {
     "B101": {"title": "Python", "copies": 5},
-    "B102": {"title": "Java", "copies": 3},
-    "B103": {"title": "C Language", "copies": 2}
+    "B102": {"title": "Java", "copies": 2},
+    "B103": {"title": "C Language", "copies": 0},
+    "B104": {"title": "DBMS", "copies": 4},
+    "B105": {"title": "OS", "copies": 1}
 }
 
 while True:
 
     print("\n1.Display Books")
     print("2.Add Book")
-    print("3.Search Book")
-    print("4.Issue Book")
-    print("5.Return Book")
-    print("6.Low Copies Books")
-    print("7.Exit")
+    print("3.Remove Book")
+    print("4.Search by ID")
+    print("5.Search by Title")
+    print("6.Issue Book")
+    print("7.Return Book")
+    print("8.Low Copies Books")
+    print("9.Unavailable Books")
+    print("10.Most Available Book")
+    print("11.Restocking Report")
+    print("12.Immediate Purchase Books")
+    print("13.Exit")
 
     ch = int(input("Enter Choice: "))
 
-    # Display Books
     if ch == 1:
 
         for b in library:
             print(b, library[b])
 
-    # Add Book
     elif ch == 2:
 
         bid = input("Enter Book ID: ")
-        title = input("Enter Book Name: ")
+        title = input("Enter Title: ")
         copies = int(input("Enter Copies: "))
 
         library[bid] = {
@@ -64,19 +70,33 @@ while True:
 
         print("Book Added")
 
-    # Search Book
     elif ch == 3:
 
         bid = input("Enter Book ID: ")
 
         if bid in library:
-            print(library[bid])
+            del library[bid]
+            print("Book Removed")
 
+    elif ch == 4:
+
+        bid = input("Enter Book ID: ")
+
+        if bid in library:
+            print(library[bid])
         else:
             print("Book Not Found")
 
-    # Issue Book
-    elif ch == 4:
+    elif ch == 5:
+
+        title = input("Enter Book Title: ")
+
+        for b in library:
+
+            if library[b]["title"] == title:
+                print(library[b])
+
+    elif ch == 6:
 
         bid = input("Enter Book ID: ")
 
@@ -88,8 +108,7 @@ while True:
         else:
             print("Book Not Available")
 
-    # Return Book
-    elif ch == 5:
+    elif ch == 7:
 
         bid = input("Enter Book ID: ")
 
@@ -98,18 +117,60 @@ while True:
             library[bid]["copies"] += 1
             print("Book Returned")
 
-    # Low Copies
-    elif ch == 6:
+    elif ch == 8:
 
-        print("Books with less than 3 copies:")
+        print("Books with Less Than 3 Copies:")
 
         for b in library:
 
             if library[b]["copies"] < 3:
                 print(library[b]["title"])
 
-    # Exit
-    elif ch == 7:
+    elif ch == 9:
+
+        print("Unavailable Books:")
+
+        for b in library:
+
+            if library[b]["copies"] == 0:
+                print(library[b]["title"])
+
+    elif ch == 10:
+
+        book = ""
+        max_copy = -1
+
+        for b in library:
+
+            if library[b]["copies"] > max_copy:
+
+                max_copy = library[b]["copies"]
+                book = library[b]["title"]
+
+        print("Most Available Book =", book)
+
+    elif ch == 11:
+
+        print("Restocking Report:")
+
+        for b in library:
+
+            if library[b]["copies"] < 3:
+                print(library[b]["title"])
+
+    elif ch == 12:
+
+        purchase = {}
+
+        for b in library:
+
+            if library[b]["copies"] <= 1:
+                purchase[b] = library[b]
+
+        print("Immediate Purchase Books:")
+        print(purchase)
+
+    elif ch == 13:
         break
 
     else:
